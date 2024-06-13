@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Job } from '../job.model';
+import { JobsQueryService } from '../jobs-query.service';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-job-list',
   standalone: true,
-  imports: [],
+  imports: [ CommonModule ],
   templateUrl: './job-list.component.html',
   styleUrl: './job-list.component.css'
 })
-export class JobListComponent {
+export class JobListComponent implements OnInit {
 
-  jobs: Job[] = [];
+  jobs$!: Observable<Job[]>;
 
-  constructor() {
-    // TODO fetch from db instead
-    this.jobs = [
-      {companyLogo: "logo", companyName: "FIRST", reference: "referenceFirst", title: "titleFirst"},
-      {companyLogo: "logo", companyName: "SECOND", reference: "referenceSecond", title: "titleSecond"},
-    ]
+  constructor(
+    private jobsQueryService: JobsQueryService,
+  ) {}
+
+  ngOnInit(): void {
+    this.jobs$ = this.jobsQueryService.getAllJobs()
   }
 
 }

@@ -1,4 +1,4 @@
 <p>job-list works!</p>
-@for (job of jobs; track job.reference) {
+@for (job of jobs$ | async; track job.reference) {
     <p>{{ job.title }}</p>
 }
