@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Job } from './job.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, delay, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,8 @@ export class JobsQueryService {
   ) { }
 
   getAllJobs(): Observable<Job[]> {
-    return this.http.get<Job[]>('/jobs');
+    return this.http.get<Job[]>('/jobs')
+      //.pipe(delay(2000))  // Simulate slow connection
   }
 
 }

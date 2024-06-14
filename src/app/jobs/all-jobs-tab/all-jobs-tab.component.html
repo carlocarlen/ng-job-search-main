@@ -1,5 +1,9 @@
 @if (allJobs$ | async; as allJobs) {
-    <app-job-list [jobs]="allJobs"></app-job-list>
+    @if (allJobs.length > 0) {
+        <app-job-list [jobs]="allJobs"></app-job-list>
+    } @else {
+        <p>Sorry, currently no jobs</p>
+    }
 } @else {
-    <p>Sorry, currently no jobs</p>
+    <p>Loading jobs</p>
 }
