@@ -1,5 +1,4 @@
 <p>job-list works!</p>
 @for (job of jobs$ | async; track job.reference) {
-    <p>{{ job.title }}</p>
-    <app-job-list-item></app-job-list-item>
+    <app-job-list-item [job]="job"></app-job-list-item>
 }
