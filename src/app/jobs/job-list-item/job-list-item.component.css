@@ -1,0 +1,14 @@
+.job-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex; /* Use flexbox for layout */
+}
+.company-logo {
+    max-width: 100px;
+    max-height: 50px;
+    margin-right: 10px; /* Add some spacing between logo and text */
+}
+.job-details {
+    flex: 1; /* Allow job details to take remaining space */
+}
