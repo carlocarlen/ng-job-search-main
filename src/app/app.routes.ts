@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { JobListComponent } from './jobs/job-list/job-list.component';
+import { AllJobsTabComponent } from './jobs/all-jobs-tab/all-jobs-tab.component';
 
 export const routes: Routes = [
-    { path: '', component: JobListComponent}
+    { path: '', component: AllJobsTabComponent}
 ];

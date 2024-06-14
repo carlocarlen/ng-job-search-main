@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Job } from '../job.model';
 import { JobsQueryService } from '../jobs-query.service';
 import { Observable } from 'rxjs';
@@ -12,16 +12,8 @@ import { JobListItemComponent } from "../job-list-item/job-list-item.component";
     styleUrl: './job-list.component.css',
     imports: [CommonModule, JobListItemComponent]
 })
-export class JobListComponent implements OnInit {
+export class JobListComponent {
 
-  jobs$!: Observable<Job[]>;
-
-  constructor(
-    private jobsQueryService: JobsQueryService,
-  ) {}
-
-  ngOnInit(): void {
-    this.jobs$ = this.jobsQueryService.getAllJobs()
-  }
+  @Input() jobs!: Job[];
 
 }

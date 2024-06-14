@@ -1,0 +1,5 @@
+@if (allJobs$ | async; as allJobs) {
+    <app-job-list [jobs]="allJobs"></app-job-list>
+} @else {
+    <p>Sorry, currently no jobs</p>
+}
