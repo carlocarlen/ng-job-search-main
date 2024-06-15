@@ -45,23 +45,28 @@ describe('FavoritesService', () => {
   });
 
   describe('addFavorite', () => {
-    it('should not erase previous values', () => {
+    it('should update favorites', () => {
+      expect(service.favorites().length).toBe(0);
+
       service.addFavorite(jobOne);
       expect(service.favorites().length).toBe(1);
-  
+      expect(service.favorites()).toContain(jobOne);
+
       service.addFavorite(jobTwo);
       expect(service.favorites().length).toBe(2);
-  
+      expect(service.favorites()).toContain(jobOne);
+      expect(service.favorites()).toContain(jobTwo);
     })
   
     it('should not add values twice', () => {
       service.addFavorite(jobOne);
       service.addFavorite(jobOne);
       expect(service.favorites().length).toBe(1);
-    })   
-  })
+    })  
 
-
+    // Probably just check that a persist storage is called, like we would do with http request
+    it('should persist new favorite')
+  });
 
 /*   it('addFavorite should make favorites to emit a new signal', (done) => {
     let firstCall = true;
@@ -80,9 +85,26 @@ describe('FavoritesService', () => {
 
   }) */
 
-  it('removeFavorite should remove only that favorite')
+  describe('removeFavorite', () => {
+    it('should update favorites', () => {
+      expect(service.favorites().length).toBe(0);
 
-  it('removeFavorite should make getFavorites to emit a new signal')
+      service.addFavorite(jobOne);
+      service.addFavorite(jobTwo);
+      expect(service.favorites().length).toBe(2);
+
+      service.removeFavorite(jobOne);
+      expect(service.favorites().length).toBe(1);
+      expect(service.favorites()).toContain(jobTwo);
+    });
+
+    it('should not fail if job to remove was not favorite', () => {
+      service.addFavorite(jobOne);
+      service.removeFavorite(jobTwo);
+      expect(service.favorites().length).toBe(1);
+      expect(service.favorites()).toContain(jobOne);
+    })
+  });
 });
 
 class LocalStorageServiceMock {

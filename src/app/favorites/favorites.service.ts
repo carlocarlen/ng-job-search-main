@@ -35,7 +35,7 @@ export class FavoritesService {
     const jobKey = this.jobToKey(job);
     let newKeys: Set<string> = this.getStoredKeys().add(jobKey);
     this.localStorageService.setItem(FavoritesService.FAVORITES, this.setToString(newKeys));
-    this.favoriteKeys.set(newKeys)
+    this.favoriteKeys.set(newKeys);
   }
 
   /**
