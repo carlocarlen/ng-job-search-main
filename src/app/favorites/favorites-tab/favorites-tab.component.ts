@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { Job } from '../../jobs/job.model';
 import { JobListComponent } from "../../jobs/job-list/job-list.component";
+import { FavoritesService } from '../favorites.service';
 
 @Component({
     selector: 'app-favorites-tab',
@@ -11,7 +12,12 @@ import { JobListComponent } from "../../jobs/job-list/job-list.component";
 })
 export class FavoritesTabComponent {
 
-  // TODO: subscribe to the correct thing
-  favorites: Job[] = [];
+  favorites: Signal<Job[]>;
+
+  constructor(
+    favoritesService: FavoritesService,
+  ) {
+    this.favorites = favoritesService.favorites
+  }
 
 }
