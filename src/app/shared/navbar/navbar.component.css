@@ -1,0 +1,16 @@
+.button-container {
+    display: flex;
+}
+
+.button-container button {
+    flex: 1; /* Each button will take up equal space */
+    padding: 10px;
+    border: none;
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.button-container button.active {
+    background-color: blue; /* Special color for the active tab */
+    color: white;
+}
