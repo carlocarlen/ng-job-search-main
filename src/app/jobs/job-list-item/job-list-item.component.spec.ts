@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobListItemComponent } from './job-list-item.component';
 import { provideHttpClient } from '@angular/common/http';
+import { JobListItemComponent } from './job-list-item.component';
 
 describe('JobListItemComponent', () => {
   let component: JobListItemComponent;
@@ -16,7 +16,7 @@ describe('JobListItemComponent', () => {
     
     fixture = TestBed.createComponent(JobListItemComponent);
     component = fixture.componentInstance;
-    component.job = {companyLogo: "", companyName: "", reference: "", title: ""};
+    component.job = {id: 1, companyLogo: "", companyName: "", reference: "", title: "", isFavorite: false};
     fixture.detectChanges();
   });
 

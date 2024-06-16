@@ -1,20 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FavoritesLocalStorageService } from './favorites-local-storage.service';
 import { Job } from '../jobs/job.model';
+import { FavoritesLocalStorageService } from './favorites-local-storage.service';
 
 const jobOne: Job = {
+  id: 1,
   title: 'Job One',
   companyName: 'Company One',
   companyLogo: 'OneLogo',
-  reference: 'job-one'
+  reference: 'job-one',
+  isFavorite: true,
 }
 
 const jobTwo: Job = {
+  id: 2,
   title: 'Job Two',
   companyName: 'Company two',
   companyLogo: 'TwoLogo',
-  reference: 'job-two'
+  reference: 'job-two',
+  isFavorite: false,
 }
 
 let localStorageMock: {[key: string]: string};

@@ -22,6 +22,10 @@ export class FavoritesService {
     return this.favoritesSignal.asReadonly();
    }
 
+   getFavoritesId(): number[] {
+    return []; // TODO
+   }
+
   /**
    * Add a job to the favorites
    * @param job a favorite job
