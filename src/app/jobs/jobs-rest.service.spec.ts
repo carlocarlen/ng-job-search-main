@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { JobsQueryService } from './jobs-query.service';
 import { provideHttpClient } from '@angular/common/http';
+import { JobsRestService } from './jobs-rest.service';
 
-describe('JobsQueryService', () => {
-  let service: JobsQueryService;
+describe('JobsRestService', () => {
+  let service: JobsRestService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideHttpClient()]
     });
-    service = TestBed.inject(JobsQueryService);
+    service = TestBed.inject(JobsRestService);
   });
 
   it('should be created', () => {

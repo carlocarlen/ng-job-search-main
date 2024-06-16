@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Job } from './job.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable, delay, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Job } from './job.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class JobsQueryService {
+export class JobsRestService {
 
   constructor(
     private http: HttpClient,

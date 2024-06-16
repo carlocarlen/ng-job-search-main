@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { JobsService } from '../jobs.service';
 import { AllJobsTabComponent } from './all-jobs-tab.component';
-import { JobsQueryService } from '../jobs-query.service';
 
 describe('AllJobsTabComponent', () => {
   let component: AllJobsTabComponent;
@@ -11,7 +11,7 @@ describe('AllJobsTabComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AllJobsTabComponent],
       providers: [
-        {provide: JobsQueryService, useValue: jasmine.createSpyObj('jobsQueryService', ['getAllJobs']) }
+        {provide: JobsService, useValue: jasmine.createSpyObj('jobsService', ['getJobs']) }
       ]
     })
     .compileComponents();

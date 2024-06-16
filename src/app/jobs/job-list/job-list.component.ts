@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Job } from '../job.model';
-import { JobsQueryService } from '../jobs-query.service';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { JobListItemComponent } from "../job-list-item/job-list-item.component";
+import { Job } from '../job.model';
 
 @Component({
     selector: 'app-job-list',

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { JobListComponent } from "../job-list/job-list.component";
-import { JobsQueryService } from '../jobs-query.service';
-import { Observable } from 'rxjs';
-import { Job } from '../job.model';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { JobListComponent } from "../job-list/job-list.component";
+import { Job } from '../job.model';
+import { JobsService } from '../jobs.service';
 
 @Component({
     selector: 'app-all-jobs-tab',
@@ -17,10 +17,10 @@ export class AllJobsTabComponent implements OnInit {
   allJobs$!: Observable<Job[]>;
 
   constructor(
-    private jobsQueryService: JobsQueryService,
+    private jobsService: JobsService,
   ) {}
 
   ngOnInit(): void {
-    this.allJobs$ = this.jobsQueryService.getAllJobs();
+    this.allJobs$ = this.jobsService.getJobs();
   }
 }
