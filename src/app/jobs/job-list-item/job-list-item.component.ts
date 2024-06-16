@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { FavoritesService } from '../../favorites/favorites.service';
 import { Job } from '../job.model';
 
 @Component({
   selector: 'app-job-list-item',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './job-list-item.component.html',
   styleUrl: './job-list-item.component.css'
 })

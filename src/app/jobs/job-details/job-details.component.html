@@ -1,0 +1,7 @@
+<p>job-details works!</p>
+@if (jobDetails$ | async; as jobDetails) {
+    <p>{{ jobDetails.title }}</p>
+    <p>{{ jobDetails.description }}</p>
+} @else {
+    <p>Loading details</p>
+}
