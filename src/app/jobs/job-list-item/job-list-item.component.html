@@ -4,6 +4,6 @@
         <h2>{{job.title}}</h2>
         <p>Company: {{ job.companyName }} Reference: {{ job.reference }} </p>
     </div>
-    <span class="icon-star" [class.active]="isFavorite" (click)="toggleFavorite()"></span>
+    <span class="icon-star" [class.active]="job.isFavorite" (click)="toggleFavorite()"></span>
 </div>
 
