@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { Job } from '../jobs/job.model';
 import { FavoritesService } from './favorites.service';
 
 describe('FavoritesService', () => {
@@ -14,67 +15,38 @@ describe('FavoritesService', () => {
     expect(service).toBeTruthy();
   });
 
-});
-
-  // describe('addFavorite', () => {
-  //   it('should update favorites', () => {
-  //     expect(service.favorites().length).toBe(0);
-
-  //     service.addFavorite(jobOne);
-  //     expect(service.favorites().length).toBe(1);
-  //     expect(service.favorites()).toContain(jobOne);
-
-  //     service.addFavorite(jobTwo);
-  //     expect(service.favorites().length).toBe(2);
-  //     expect(service.favorites()).toContain(jobOne);
-  //     expect(service.favorites()).toContain(jobTwo);
-  //   })
-  
-  //   it('should not add values twice', () => {
-  //     service.addFavorite(jobOne);
-  //     service.addFavorite(jobOne);
-  //     expect(service.favorites().length).toBe(1);
-  //   })  
-
-  //   // Probably just check that a persist storage is called, like we would do with http request
-  //   it('should persist new favorite')
-  // });
-
-/*   it('addFavorite should make favorites to emit a new signal', (done) => {
-    let firstCall = true;
-    effect(() => {
-      if (firstCall && service.favorites().length == 1) {
-        firstCall = false;
-      } else if (service.favorites().length == 2) {
-        done();
-      } else {
-        done.fail();
+  describe('addFavorite', () => {
+    it('should mark job as favorite', () => {
+      const jobOne: Job = {
+        id: 1,
+        title: 'Job One',
+        companyName: 'Company One',
+        companyLogo: 'OneLogo',
+        reference: 'job-one',
+        isFavorite: false,
       }
-    });
 
-    service.addFavorite(jobOne);
-    service.addFavorite(jobTwo);
+      service.addFavorite(jobOne);
 
-  }) */
+      expect(jobOne.isFavorite).toBeTrue();
+    })
+  })
 
-//   describe('removeFavorite', () => {
-//     it('should update favorites', () => {
-//       expect(service.favorites().length).toBe(0);
+  describe('removeFavorite', () => {
+    it('should mark job as not favorite', () => {
+      const jobOne: Job = {
+        id: 1,
+        title: 'Job One',
+        companyName: 'Company One',
+        companyLogo: 'OneLogo',
+        reference: 'job-one',
+        isFavorite: true,
+      }  
+      
+      service.removeFavorite(jobOne);
 
-//       service.addFavorite(jobOne);
-//       service.addFavorite(jobTwo);
-//       expect(service.favorites().length).toBe(2);
+      expect(jobOne.isFavorite).toBeFalse();
+    })
+  })
 
-//       service.removeFavorite(jobOne);
-//       expect(service.favorites().length).toBe(1);
-//       expect(service.favorites()).toContain(jobTwo);
-//     });
-
-//     it('should not fail if job to remove was not favorite', () => {
-//       service.addFavorite(jobOne);
-//       service.removeFavorite(jobTwo);
-//       expect(service.favorites().length).toBe(1);
-//       expect(service.favorites()).toContain(jobOne);
-//     })
-//   });
-// });
+});

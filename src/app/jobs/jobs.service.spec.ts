@@ -26,6 +26,10 @@ describe('JobsService', () => {
   let service: JobsService;
   let jobsRestServiceSpy = jasmine.createSpyObj('JobsRestService', ['getAllJobs']);
   let favoritesServiceSpy = jasmine.createSpyObj('FavoritesService', ['getFavoritesId']);
+  const mockJobDtos = [jobDtoOne, jobDtoTwo];
+  const mockFavoritesIds = [1];
+  jobsRestServiceSpy.getAllJobs.and.returnValue(of(mockJobDtos));
+  favoritesServiceSpy.getFavoritesId.and.returnValue(mockFavoritesIds);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -44,15 +48,20 @@ describe('JobsService', () => {
 
   describe('getJobs', () => {
     it('should return jobs with isFavorite information', (done: DoneFn) => {
-      const mockJobDtos = [jobDtoOne, jobDtoTwo];
-      const mockFavoritesIds = [1];
-      jobsRestServiceSpy.getAllJobs.and.returnValue(of(mockJobDtos));
-      favoritesServiceSpy.getFavoritesId.and.returnValue(mockFavoritesIds);
-
       service.getJobs().subscribe(jobs => {
         expect(jobs.length).toBe(2);
         expect(jobs[0].isFavorite).toBeTrue();
         expect(jobs[1].isFavorite).toBeFalse();
+        done();
+      })
+    })
+  })
+
+  describe('getFavoriteJobs', () => {
+    it('should return only favorite jobs', (done: DoneFn) => {
+      service.getFavoriteJobs().subscribe(jobs => {
+        expect(jobs.length).toBe(1);
+        expect(jobs[0].isFavorite).toBeTrue();
         done();
       })
     })

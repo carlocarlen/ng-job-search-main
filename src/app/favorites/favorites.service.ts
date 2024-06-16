@@ -1,4 +1,4 @@
-import { Injectable, Signal, WritableSignal, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Job } from '../jobs/job.model';
 import { FavoritesLocalStorageService } from './favorites-local-storage.service';
 
@@ -7,32 +7,25 @@ import { FavoritesLocalStorageService } from './favorites-local-storage.service'
 })
 export class FavoritesService {
   
-  private favoritesSignal: WritableSignal<Job[]>;
-
   constructor(
     private favoritesStorage: FavoritesLocalStorageService,
-  ) {
-    this.favoritesSignal = signal(favoritesStorage.getAllFavorites());
-   }
+  ) {}
 
-   /**
-    * Get all favorites as a Signal
-    */
-   get favorites(): Signal<Job[]> {
-    return this.favoritesSignal.asReadonly();
-   }
-
-   getFavoritesId(): number[] {
-    return []; // TODO
-   }
+  /**
+   * 
+   * @returns the array of favorite job ids
+   */
+  getFavoritesId(): number[] {
+    return this.favoritesStorage.getFavoritesIds();
+  }
 
   /**
    * Add a job to the favorites
    * @param job a favorite job
    */
   addFavorite(job: Job) {
+    job.isFavorite = true;
     this.favoritesStorage.addFavorite(job);
-    this.favoritesSignal.set(this.favoritesStorage.getAllFavorites());
   }
 
   /**
@@ -40,8 +33,8 @@ export class FavoritesService {
    * @param job a job not favorite anymore
    */
   removeFavorite(job: Job) {
+    job.isFavorite = false;
     this.favoritesStorage.removeFavorite(job);
-    this.favoritesSignal.set(this.favoritesStorage.getAllFavorites());
   }
 
 }

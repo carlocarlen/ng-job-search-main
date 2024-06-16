@@ -15,7 +15,6 @@ export class JobsService {
   ) { }
 
   getJobs(): Observable<Job[]> {
-    
     return this.jobsRestService.getAllJobs().pipe(
       map(jobDtos => {
         let favoritesId = this.favoritesService.getFavoritesId();
@@ -24,6 +23,12 @@ export class JobsService {
           isFavorite: favoritesId.includes(jobDto.id)
         }))        
       })
+    )
+  }
+
+  getFavoriteJobs(): Observable<Job[]> {
+    return this.getJobs().pipe(
+      map(jobs => jobs.filter(job => job.isFavorite))
     )
   }
 }

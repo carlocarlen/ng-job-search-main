@@ -61,24 +61,35 @@ describe('FavoritesLocalStorageService', () => {
 
   it('should add favorites', () => {
     service.addFavorite(jobOne);
-    expect(service.getAllFavorites().length).toBe(1);
-    expect(service.getAllFavorites()).toContain(jobOne);
+    expect(service.getFavoritesIds().length).toBe(1);
+    expect(service.getFavoritesIds()).toContain(1);
   })
 
   it('should remove favorites', () => {
     service.addFavorite(jobOne);
     service.addFavorite(jobTwo);
     service.removeFavorite(jobOne);
-    expect(service.getAllFavorites().length).toBe(1);
-    expect(service.getAllFavorites()).toContain(jobTwo);   
+    expect(service.getFavoritesIds().length).toBe(1);
+    expect(service.getFavoritesIds()).toContain(2);   
   })
 
   it('should not return accidentally other local storage entries', () => {
     window.localStorage.setItem("aKey", "not a job");
     service.addFavorite(jobOne);
 
-    expect(service.getAllFavorites().length).toBe(1);
-    expect(service.getAllFavorites()).toContain(jobOne);
+    expect(service.getFavoritesIds().length).toBe(1);
+    expect(service.getFavoritesIds()).toContain(1);
+  })
+
+  it('should return the array of favorites ids as number array', () => {
+    service.addFavorite(jobOne);
+    service.addFavorite(jobTwo);
+    expect(service.getFavoritesIds()).toEqual([1,2]);
+  })
+
+  it('should return an empty array if no ids are stored', () => {
+    expect(service.getFavoritesIds()).not.toBeNull();
+    expect(service.getFavoritesIds()).toEqual([]);
   })
 });
 
