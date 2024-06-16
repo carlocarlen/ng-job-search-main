@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { provideHttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { JobListItemComponent } from './job-list-item.component';
 
 describe('JobListItemComponent', () => {
@@ -10,7 +11,7 @@ describe('JobListItemComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [JobListItemComponent],
-      providers: [provideHttpClient()],
+      providers: [provideHttpClient(), { provide: ActivatedRoute, useValue: {}}],
     })
     .compileComponents();
     
