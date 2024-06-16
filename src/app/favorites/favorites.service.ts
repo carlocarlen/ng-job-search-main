@@ -1,8 +1,5 @@
-import { Injectable, Signal, WritableSignal, computed, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop'
+import { Injectable, Signal, WritableSignal, signal } from '@angular/core';
 import { Job } from '../jobs/job.model';
-import { LocalStorageService } from '../shared/local-storage.service';
-import { JobsQueryService } from '../jobs/jobs-query.service';
 import { FavoritesLocalStorageService } from './favorites-local-storage.service';
 
 @Injectable({
