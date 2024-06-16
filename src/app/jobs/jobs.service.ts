@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { FavoritesService } from '../favorites/favorites.service';
-import { Job } from './job.model';
+import { Job, JobDetail } from './job.model';
 import { JobsRestService } from './jobs-rest.service';
 
 @Injectable({
@@ -29,6 +29,12 @@ export class JobsService {
   getFavoriteJobs(): Observable<Job[]> {
     return this.getJobs().pipe(
       map(jobs => jobs.filter(job => job.isFavorite))
+    )
+  }
+
+  getJobDetails(jobId: number): Observable<JobDetail> {
+    return this.jobsRestService.getJobDetails(jobId).pipe(
+      map(jobDto => ({...jobDto}))
     )
   }
 }
