@@ -24,7 +24,9 @@ export class FavoritesService {
   addFavorite(job: Job) {
     job.isFavorite = true;
     this.favoritesStorage.addFavorite(job);
-    this.publishFavorites();
+
+    const currentFavorites = this.favoritesSubject.getValue();
+    this.favoritesSubject.next([...currentFavorites, job]);
   }
 
   /**
@@ -34,7 +36,9 @@ export class FavoritesService {
   removeFavorite(job: Job) {
     job.isFavorite = false;
     this.favoritesStorage.removeFavorite(job);
-    this.publishFavorites();
+
+    const currentFavorites = this.favoritesSubject.getValue();
+    this.favoritesSubject.next(currentFavorites.filter(favorite => favorite.id !== job.id));
   }
 
   /**
