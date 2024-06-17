@@ -6,8 +6,8 @@
         <h1>{{ jobDetails.companyName }} - {{ jobDetails.title }}</h1>
         <div class="labels">
           <!-- Loop through types and industries to create labels -->
-          <span class="label" *ngFor="let type of jobDetails.types">{{ type }}</span>
-          <span class="label" *ngFor="let industry of jobDetails.industries">{{ industry }}</span>
+          <span class="label" *ngFor="let type of jobDetails.types" [innerHTML]="type"></span>
+          <span class="label" *ngFor="let industry of jobDetails.industries" [innerHTML]="industry"></span>
         </div>
       </div>
     </div>
