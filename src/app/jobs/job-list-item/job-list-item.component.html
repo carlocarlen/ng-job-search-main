@@ -1,7 +1,7 @@
 <div class="job-card">
     <img class="company-logo" [src]="job.companyLogo" [alt]="job.companyName">
     <div class="job-details">
-        <a [routerLink]="['/jobs', job.id]"><h2>{{job.title}}</h2></a>
+        <a [routerLink]="['.', job.id]"><h2>{{job.title}}</h2></a>
         <p>Company: {{ job.companyName }} Reference: {{ job.reference }} </p>
     </div>
     <span class="icon-star" [class.active]="job.isFavorite" (click)="toggleFavorite()"></span>
