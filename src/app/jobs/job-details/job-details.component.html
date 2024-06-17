@@ -1,8 +1,7 @@
 <button routerLink=".." class="back-button">BACK</button>
 
 @if (jobDetails$ | async; as jobDetails) {
-    <p>{{ jobDetails.title }}</p>
-    <p>{{ jobDetails.description }}</p>
+    <app-job-details-content [jobDetails]="jobDetails"></app-job-details-content>
 } @else {
     <p>Loading details</p>
 }
