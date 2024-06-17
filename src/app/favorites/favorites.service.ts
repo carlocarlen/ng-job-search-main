@@ -48,8 +48,7 @@ export class FavoritesService {
   }
 
   /**
-   * 
-   * @returns Observable of favorite Jobs. For the moment emits only on subscription via the http call to jobs.
+   * @returns Observable of favorite Jobs. Emits when subscribe, and then also each time a favorite is added or removed.
    */
   getFavorites(): Observable<Job[]> {
     this.publishFavorites();
