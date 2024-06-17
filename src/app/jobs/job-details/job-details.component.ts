@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JobDetail } from '../job.model';
 import { JobsService } from '../jobs.service';
@@ -7,7 +8,7 @@ import { JobsService } from '../jobs.service';
 @Component({
   selector: 'app-job-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './job-details.component.html',
   styleUrl: './job-details.component.css'
 })
