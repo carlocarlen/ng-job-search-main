@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { JobDto } from '../jobs/job.dto';
 import { Job } from '../jobs/job.model';
 import { JobsRestService } from '../jobs/jobs-rest.service';
@@ -9,6 +9,8 @@ import { FavoritesLocalStorageService } from './favorites-local-storage.service'
   providedIn: 'root'
 })
 export class FavoritesService {
+
+  private favoritesSubject = new BehaviorSubject<Job[]>([]);
   
   constructor(
     private favoritesStorage: FavoritesLocalStorageService,
@@ -22,6 +24,7 @@ export class FavoritesService {
   addFavorite(job: Job) {
     job.isFavorite = true;
     this.favoritesStorage.addFavorite(job);
+    this.publishFavorites();
   }
 
   /**
@@ -31,6 +34,7 @@ export class FavoritesService {
   removeFavorite(job: Job) {
     job.isFavorite = false;
     this.favoritesStorage.removeFavorite(job);
+    this.publishFavorites();
   }
 
   /**
@@ -48,6 +52,19 @@ export class FavoritesService {
    * @returns Observable of favorite Jobs. For the moment emits only on subscription via the http call to jobs.
    */
   getFavorites(): Observable<Job[]> {
+    this.publishFavorites();
+    return this.favoritesSubject.asObservable();
+  }
+
+  private publishFavorites() {
+    this.fetchAllFavorites().subscribe(
+      (favorites) => {
+        this.favoritesSubject.next(favorites);
+      }
+    );
+  }
+
+  private fetchAllFavorites(): Observable<Job[]> {
     return this.jobsRestService.getAllJobs().pipe(
       map(jobDtos => jobDtos.map(jobDto => ({
           ...jobDto,
