@@ -21,6 +21,11 @@ const jobTwo: Job = {
   isFavorite: false,
 }
 
+/**
+ * While window.localStorage IS accessible to the test environment, 
+ * it is better to mock it so that we can control its state,
+ * in particular we start always with an empty storage.
+ */
 let localStorageMock: {[key: string]: string};
 const mockingLocalStorage = {
   getItem(key: string): string | null {
