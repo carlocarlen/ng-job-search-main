@@ -1,2 +1,24 @@
-<p>{{ jobDetails.title }}</p>
-<p>{{ jobDetails.description }}</p>
+<div class="job-details">
+    <!-- Title section -->
+    <div class="title-section">
+      <img src="{{ jobDetails.companyLogo }}" alt="Company Logo" class="company-logo">
+      <div>
+        <h1>{{ jobDetails.companyName }} - {{ jobDetails.title }}</h1>
+        <div class="labels">
+          <!-- Loop through types and industries to create labels -->
+          <span class="label" *ngFor="let type of jobDetails.types">{{ type }}</span>
+          <span class="label" *ngFor="let industry of jobDetails.industries">{{ industry }}</span>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Information section -->
+    <div class="info-section">
+      <p><strong>Publish date:</strong> {{ jobDetails.publishDate }}</p>
+      <p><strong>Location:</strong> {{ jobDetails.location }}</p>
+      <p><strong>Reference:</strong> {{ jobDetails.reference }}</p>
+      <p><strong>Description:</strong></p>
+      <!-- Render HTML description -->
+      <div [innerHTML]="jobDetails.description"></div>
+    </div>
+  </div>

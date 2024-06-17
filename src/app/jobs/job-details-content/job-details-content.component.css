@@ -1,0 +1,33 @@
+.job-details {
+    font-family: Arial, sans-serif;
+  }
+  
+  .title-section {
+    display: flex;
+    align-items: center;
+  }
+  
+  .company-logo {
+    width: 100px; /* Adjust size as needed */
+    margin-right: 20px;
+  }
+  
+  .labels {
+    margin-top: 10px;
+  }
+  
+  .label {
+    display: inline-block;
+    background-color: #e0e0e0; /* Light grey background */
+    padding: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+  }
+  
+  .info-section {
+    margin-top: 20px;
+  }
+  
+  .info-section p {
+    margin: 5px 0;
+  }
