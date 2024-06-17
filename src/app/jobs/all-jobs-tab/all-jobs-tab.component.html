@@ -1,6 +1,6 @@
 @if (allJobs$ | async; as allJobs) {
     @if (allJobs.length > 0) {
-        <app-job-list [jobs]="allJobs"></app-job-list>
+        <app-job-list [jobs]="allJobs" [canHandleFavorites]="true"></app-job-list>
     } @else {
         <p>Sorry, currently no jobs</p>
     }

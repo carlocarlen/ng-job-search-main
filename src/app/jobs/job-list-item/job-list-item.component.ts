@@ -13,6 +13,7 @@ import { Job } from '../job.model';
 export class JobListItemComponent {
 
   @Input() job!: Job;
+  @Input() canHandleFavorite!: boolean
 
   constructor(
     private favoritesService: FavoritesService

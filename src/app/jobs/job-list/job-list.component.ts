@@ -13,5 +13,6 @@ import { Job } from '../job.model';
 export class JobListComponent {
 
   @Input() jobs!: Job[];
+  @Input() canHandleFavorites!: boolean;
 
 }

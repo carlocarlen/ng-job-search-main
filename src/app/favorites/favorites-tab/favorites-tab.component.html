@@ -1,6 +1,6 @@
 @if (favorites$ | async; as favorites) {
     @if (favorites.length > 0) {
-        <app-job-list [jobs]="favorites"></app-job-list>
+        <app-job-list [jobs]="favorites" [canHandleFavorites]="false"></app-job-list>
     } @else {
         <p>No favorites, yet</p>
     }

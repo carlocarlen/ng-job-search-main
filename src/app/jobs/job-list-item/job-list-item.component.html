@@ -4,6 +4,8 @@
         <a [routerLink]="['.', job.id]"><h2>{{job.title}}</h2></a>
         <p>Company: {{ job.companyName }} Reference: {{ job.reference }} </p>
     </div>
-    <span class="icon-star" [class.active]="job.isFavorite" (click)="toggleFavorite()"></span>
+    @if (canHandleFavorite) {
+        <span class="icon-star" [class.active]="job.isFavorite" (click)="toggleFavorite()"></span>
+    }
 </div>
 

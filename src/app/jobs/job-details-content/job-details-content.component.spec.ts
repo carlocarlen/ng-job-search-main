@@ -14,6 +14,7 @@ describe('JobDetailsContentComponent', () => {
     
     fixture = TestBed.createComponent(JobDetailsContentComponent);
     component = fixture.componentInstance;
+    component.jobDetails = {companyLogo: "", companyName: "", description: "", id: 1, industries: [], location: "", publishDate: "", reference: "", title: "", types: []};
     fixture.detectChanges();
   });
 
