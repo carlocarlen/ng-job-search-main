@@ -1,7 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
+import { of } from 'rxjs';
 import { JobDto } from '../jobs/job.dto';
 import { Job } from '../jobs/job.model';
+import { JobsRestService } from '../jobs/jobs-rest.service';
 import { FavoritesService } from './favorites.service';
 
 const testJobDto: JobDto = {
@@ -14,9 +16,14 @@ const testJobDto: JobDto = {
 
 describe('FavoritesService', () => {
   let service: FavoritesService;
+  let jobsRestServiceSpy = jasmine.createSpyObj('jobsRestService', ['getAllJobs']);
  
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: JobsRestService, useValue: jobsRestServiceSpy }
+      ]
+    });
     service = TestBed.inject(FavoritesService);
   });
 
@@ -71,6 +78,34 @@ describe('FavoritesService', () => {
       service.removeFavorite(job);
 
       expect(service.isFavorite(job)).toBeFalse();
+    })
+  })
+
+  describe('getFavorites', () => {
+    it('should return only favorite jobs', (done: DoneFn) => {
+      const favoriteJob: Job = {
+        ...testJobDto,
+        id: 21,
+        isFavorite: true,
+      }
+      const nonFavoriteJob: Job = {
+        ...testJobDto,
+        id: 22,
+        isFavorite: false,
+      }
+
+      service.addFavorite(favoriteJob);
+      service.removeFavorite(nonFavoriteJob);
+
+      jobsRestServiceSpy.getAllJobs.and.returnValue(of([
+        {...testJobDto, id: 21}, {...testJobDto, id: 22}
+      ]));
+
+      service.getFavorites().subscribe(jobs => {
+        expect(jobs.length).toBe(1);
+        expect(jobs[0].isFavorite).toBeTrue();
+        done();
+      })
     })
   })
 

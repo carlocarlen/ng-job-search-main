@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobsService } from '../../jobs/jobs.service';
+import { FavoritesService } from '../favorites.service';
 import { FavoritesTabComponent } from './favorites-tab.component';
 
 describe('FavoritesTabComponent', () => {
@@ -10,7 +10,7 @@ describe('FavoritesTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FavoritesTabComponent],
-      providers: [{ provide: JobsService, useValue: jasmine.createSpyObj('JobsService', ['getFavoriteJobs'])}]
+      providers: [{ provide: FavoritesService, useValue: jasmine.createSpyObj('favoritesService', ['getFavorites'])}]
     })
     .compileComponents();
     

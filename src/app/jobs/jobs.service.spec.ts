@@ -57,15 +57,5 @@ describe('JobsService', () => {
       })
     })
   })
-
-  describe('getFavoriteJobs', () => {
-    it('should return only favorite jobs', (done: DoneFn) => {
-      service.getFavoriteJobs().subscribe(jobs => {
-        expect(jobs.length).toBe(1);
-        expect(jobs[0].isFavorite).toBeTrue();
-        done();
-      })
-    })
-  })
   
 });
