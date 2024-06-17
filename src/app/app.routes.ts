@@ -4,7 +4,8 @@ import { AllJobsTabComponent } from './jobs/all-jobs-tab/all-jobs-tab.component'
 import { JobDetailsComponent } from './jobs/job-details/job-details.component';
 
 export const routes: Routes = [
-    { path: '', component: AllJobsTabComponent},
+    { path: 'jobs', component: AllJobsTabComponent},
     { path: 'favorites', component: FavoritesTabComponent},
+    { path: '', redirectTo: '/jobs', pathMatch: 'full'},
     { path: 'jobs/:jobId', component: JobDetailsComponent},
 ];
