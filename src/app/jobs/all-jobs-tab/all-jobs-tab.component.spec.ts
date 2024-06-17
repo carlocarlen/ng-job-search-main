@@ -11,7 +11,7 @@ describe('AllJobsTabComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AllJobsTabComponent],
       providers: [
-        {provide: JobsService, useValue: jasmine.createSpyObj('jobsService', ['getJobs']) }
+        {provide: JobsService, useValue: jasmine.createSpyObj('jobsService', ['getJobs']) },
       ]
     })
     .compileComponents();

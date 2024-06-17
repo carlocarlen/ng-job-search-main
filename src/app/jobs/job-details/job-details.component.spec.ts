@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ActivatedRoute } from '@angular/router';
 import { JobsService } from '../jobs.service';
 import { JobDetailsComponent } from './job-details.component';
 
@@ -11,7 +12,8 @@ describe('JobDetailsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [JobDetailsComponent],
       providers: [
-        { provide: JobsService, useValue: jasmine.createSpyObj('jobsService', ['getJobDetails'])}
+        { provide: JobsService, useValue: jasmine.createSpyObj('jobsService', ['getJobDetails'])},
+        {provide: ActivatedRoute, useValue: {}},
       ]
     })
     .compileComponents();
