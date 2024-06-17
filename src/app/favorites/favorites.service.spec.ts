@@ -1,7 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
+import { JobDto } from '../jobs/job.dto';
 import { Job } from '../jobs/job.model';
 import { FavoritesService } from './favorites.service';
+
+const testJobDto: JobDto = {
+  id: 12,
+  title: 'Tester',
+  companyName: 'Testing Company',
+  companyLogo: 'LogoTest',
+  reference: 'test-job',
+}
 
 describe('FavoritesService', () => {
   let service: FavoritesService;
@@ -17,35 +26,51 @@ describe('FavoritesService', () => {
 
   describe('addFavorite', () => {
     it('should mark job as favorite', () => {
-      const jobOne: Job = {
-        id: 1,
-        title: 'Job One',
-        companyName: 'Company One',
-        companyLogo: 'OneLogo',
-        reference: 'job-one',
+      const job: Job = {
+        ...testJobDto,
         isFavorite: false,
       }
 
-      service.addFavorite(jobOne);
+      service.addFavorite(job);
 
-      expect(jobOne.isFavorite).toBeTrue();
+      expect(job.isFavorite).toBeTrue();
     })
   })
 
   describe('removeFavorite', () => {
     it('should mark job as not favorite', () => {
-      const jobOne: Job = {
-        id: 1,
-        title: 'Job One',
-        companyName: 'Company One',
-        companyLogo: 'OneLogo',
-        reference: 'job-one',
+      const job: Job = {
+        ...testJobDto,
         isFavorite: true,
       }  
       
-      service.removeFavorite(jobOne);
+      service.removeFavorite(job);
 
-      expect(jobOne.isFavorite).toBeFalse();
+      expect(job.isFavorite).toBeFalse();
+    })
+  })
+
+  describe('isFavorite', () => {
+    it('should return true after addFavorite', () => {
+      const job: Job = {
+        ...testJobDto,
+        isFavorite: false,
+      }
+
+      service.addFavorite(job);
+
+      expect(service.isFavorite(job)).toBeTrue();
+    })
+
+    it('should return false after removeFavorite', () => {
+      const job: Job = {
+        ...testJobDto,
+        isFavorite: true,
+      }
+
+      service.removeFavorite(job);
+
+      expect(service.isFavorite(job)).toBeFalse();
     })
   })
 

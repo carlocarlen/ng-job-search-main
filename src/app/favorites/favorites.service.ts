@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { JobDto } from '../jobs/job.dto';
 import { Job } from '../jobs/job.model';
 import { FavoritesLocalStorageService } from './favorites-local-storage.service';
 
@@ -12,7 +13,6 @@ export class FavoritesService {
   ) {}
 
   /**
-   * 
    * @returns the array of favorite job ids
    */
   getFavoritesId(): number[] {
@@ -35,6 +35,15 @@ export class FavoritesService {
   removeFavorite(job: Job) {
     job.isFavorite = false;
     this.favoritesStorage.removeFavorite(job);
+  }
+
+  /**
+   * A jobDto does not have the isFavorite property, this method completes that information
+   * @param jobDto a jobDto 
+   * @returns if the given jobDto is favorite
+   */
+  isFavorite(jobDto: JobDto): boolean {
+    return this.favoritesStorage.getFavoritesIds().includes(jobDto.id);
   }
 
 }
