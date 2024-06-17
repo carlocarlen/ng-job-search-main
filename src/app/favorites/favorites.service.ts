@@ -13,13 +13,6 @@ export class FavoritesService {
   ) {}
 
   /**
-   * @returns the array of favorite job ids
-   */
-  getFavoritesId(): number[] {
-    return this.favoritesStorage.getFavoritesIds();
-  }
-
-  /**
    * Add a job to the favorites
    * @param job a favorite job
    */
@@ -42,6 +35,7 @@ export class FavoritesService {
    * @param jobDto a jobDto 
    * @returns if the given jobDto is favorite
    */
+  // Thanks to this method, we do not expose how we save favorites (by id, but could be by reference or anything else)
   isFavorite(jobDto: JobDto): boolean {
     return this.favoritesStorage.getFavoritesIds().includes(jobDto.id);
   }

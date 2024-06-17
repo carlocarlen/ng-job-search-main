@@ -6,7 +6,7 @@ import { JobDto } from './job.dto';
 import { JobsRestService } from './jobs-rest.service';
 import { JobsService } from './jobs.service';
 
-const jobDtoOne: JobDto = {
+const favoriteJobDto: JobDto = {
   id: 1,
   title: 'Job One',
   companyName: 'Company One',
@@ -14,7 +14,7 @@ const jobDtoOne: JobDto = {
   reference: 'job-one',
 }
 
-const jobDtoTwo: JobDto = {
+const nonFavoriteJobDto: JobDto = {
   id: 2,
   title: 'Job Two',
   companyName: 'Company two',
@@ -24,12 +24,13 @@ const jobDtoTwo: JobDto = {
 
 describe('JobsService', () => {
   let service: JobsService;
+
   let jobsRestServiceSpy = jasmine.createSpyObj('JobsRestService', ['getAllJobs']);
-  let favoritesServiceSpy = jasmine.createSpyObj('FavoritesService', ['getFavoritesId']);
-  const mockJobDtos = [jobDtoOne, jobDtoTwo];
-  const mockFavoritesIds = [1];
-  jobsRestServiceSpy.getAllJobs.and.returnValue(of(mockJobDtos));
-  favoritesServiceSpy.getFavoritesId.and.returnValue(mockFavoritesIds);
+  jobsRestServiceSpy.getAllJobs.and.returnValue(of([favoriteJobDto, nonFavoriteJobDto]));
+
+  let favoritesServiceSpy = jasmine.createSpyObj('FavoritesService', ['isFavorite']);
+  favoritesServiceSpy.isFavorite.withArgs(favoriteJobDto).and.returnValue(true);
+  favoritesServiceSpy.isFavorite.and.returnValue(false);
 
   beforeEach(() => {
     TestBed.configureTestingModule({

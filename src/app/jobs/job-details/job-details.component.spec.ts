@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { JobsService } from '../jobs.service';
 import { JobDetailsComponent } from './job-details.component';
 
 describe('JobDetailsComponent', () => {
@@ -8,7 +9,10 @@ describe('JobDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JobDetailsComponent]
+      imports: [JobDetailsComponent],
+      providers: [
+        { provide: JobsService, useValue: jasmine.createSpyObj('jobsService', ['getJobDetails'])}
+      ]
     })
     .compileComponents();
     

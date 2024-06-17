@@ -16,13 +16,11 @@ export class JobsService {
 
   getJobs(): Observable<Job[]> {
     return this.jobsRestService.getAllJobs().pipe(
-      map(jobDtos => {
-        let favoritesId = this.favoritesService.getFavoritesId();
-        return jobDtos.map(jobDto => ({
+      map(jobDtos => jobDtos.map(jobDto => ({
           ...jobDto,
-          isFavorite: favoritesId.includes(jobDto.id)
+          isFavorite: this.favoritesService.isFavorite(jobDto)
         }))        
-      })
+      )
     )
   }
 
