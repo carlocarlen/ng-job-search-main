@@ -14,7 +14,7 @@
   
     <!-- Information section -->
     <div class="info-section">
-      <p><strong>Publish date:</strong> {{ jobDetails.publishDate }}</p>
+      <p><strong>Publish date:</strong> {{ jobDetails.publishDate | date:'dd MMM yyyy' }}</p>
       <p><strong>Location:</strong> {{ jobDetails.location }}</p>
       <p><strong>Reference:</strong> {{ jobDetails.reference }}</p>
       <p><strong>Description:</strong></p>
