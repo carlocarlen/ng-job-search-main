@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { JobDto } from '../jobs/job.dto';
 import { Job } from '../jobs/job.model';
-import { JobsRestService } from '../jobs/jobs-rest.service';
 import { FavoritesLocalStorageService } from './favorites-local-storage.service';
 
 @Injectable({
@@ -10,11 +9,10 @@ import { FavoritesLocalStorageService } from './favorites-local-storage.service'
 })
 export class FavoritesService {
 
-  private favoritesSubject = new BehaviorSubject<Job[]>([]);
+  private updatedFavoriteSubject = new Subject<Job>()
   
   constructor(
     private favoritesStorage: FavoritesLocalStorageService,
-    private jobsRestService: JobsRestService,
   ) {}
 
   /**
@@ -24,9 +22,7 @@ export class FavoritesService {
   addFavorite(job: Job) {
     job.isFavorite = true;
     this.favoritesStorage.addFavorite(job);
-
-    const currentFavorites = this.favoritesSubject.getValue();
-    this.favoritesSubject.next([...currentFavorites, job]);
+    this.updatedFavoriteSubject.next(job);
   }
 
   /**
@@ -36,9 +32,7 @@ export class FavoritesService {
   removeFavorite(job: Job) {
     job.isFavorite = false;
     this.favoritesStorage.removeFavorite(job);
-
-    const currentFavorites = this.favoritesSubject.getValue();
-    this.favoritesSubject.next(currentFavorites.filter(favorite => favorite.id !== job.id));
+    this.updatedFavoriteSubject.next(job);
   }
 
   /**
@@ -51,31 +45,8 @@ export class FavoritesService {
     return this.favoritesStorage.getFavoritesIds().includes(jobDto.id);
   }
 
-  /**
-   * @returns Observable of favorite Jobs. Emits when subscribe, and then also each time a favorite is added or removed.
-   */
-  getFavorites(): Observable<Job[]> {
-    this.publishFavorites();
-    return this.favoritesSubject.asObservable();
-  }
-
-  private publishFavorites() {
-    this.fetchAllFavorites().subscribe(
-      (favorites) => {
-        this.favoritesSubject.next(favorites);
-      }
-    );
-  }
-
-  private fetchAllFavorites(): Observable<Job[]> {
-    return this.jobsRestService.getAllJobs().pipe(
-      map(jobDtos => jobDtos.map(jobDto => ({
-          ...jobDto,
-          isFavorite: this.isFavorite(jobDto)
-        } as Job))        
-      ),
-      map(jobs => jobs.filter(job => job.isFavorite))
-    )
+  updatedFavorite(): Observable<Job> {
+    return this.updatedFavoriteSubject.asObservable();
   }
 
 }

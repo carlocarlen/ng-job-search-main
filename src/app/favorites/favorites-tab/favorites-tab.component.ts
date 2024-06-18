@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { JobListComponent } from "../../jobs/job-list/job-list.component";
 import { Job } from '../../jobs/job.model';
+import { JobsService } from '../../jobs/jobs.service';
 import { FavoritesService } from '../favorites.service';
 
 @Component({
@@ -12,16 +13,34 @@ import { FavoritesService } from '../favorites.service';
     styleUrl: './favorites-tab.component.css',
     imports: [JobListComponent, CommonModule]
 })
-export class FavoritesTabComponent implements OnInit {
+export class FavoritesTabComponent implements OnInit, OnDestroy {
 
-  favorites$!: Observable<Job[]>;
+  favoritesSignal = signal<Job[]>([]);
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private favoritesService: FavoritesService,
+    private jobsService: JobsService,
   ) { }
 
+
   ngOnInit(): void {
-    this.favorites$ = this.favoritesService.getFavorites();
+    this.subscriptions.push(
+      this.jobsService.getJobs().subscribe(jobs => this.favoritesSignal.set(jobs.filter(job => job.isFavorite)))
+    );
+    this.subscriptions.push(
+      this.favoritesService.updatedFavorite().subscribe(job => {
+        if (job.isFavorite) {
+          this.favoritesSignal.update(currentFavorites => [...currentFavorites, job]);
+        } else {
+          this.favoritesSignal.update(currentFavorites => currentFavorites.filter(fav => fav.id !== job.id));
+        }
+      })
+    );
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
 }
