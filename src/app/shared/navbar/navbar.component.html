@@ -1,9 +1,6 @@
 <div class="button-container">
-    <button routerLink="/jobs" 
-            [class.active]="currentTab === 'jobs'" 
-            (click)="setCurrentTab('jobs')">JOBS</button>
+    <button routerLink="/jobs"
+            routerLinkActive="active">JOBS</button>
     <button routerLink="/favorites"
-            [class.active]="currentTab === 'favorites'"
-            (click)="setCurrentTab('favorites')">FAVORITES</button>
-
+            routerLinkActive="active">FAVORITES</button>
 </div>
