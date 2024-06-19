@@ -46,7 +46,12 @@ export class FavoritesService {
 
   // THIS WOULD DEFINITELY BE NOT THE MOST INTUITIVE. MORE FUNCTIONAL PROGRAMMING APPROACH
   getSignalFavorites(): Signal<Job[]> {
-    // How you compute a signal of Job[] from a [] of signals?
+    this.fetchAllJobs().subscribe(allJobs => {
+      for (let aJob of allJobs) {
+        this.jobsSignals.push(signal(aJob));
+      }
+    })
+    // IMPOSSIBLE: THE jobsSignals is probably empty at this point, so jobSignal cannot register on any of them.
     return computed(() => {
       let favorites = [];
       for (var jobSignal of this.jobsSignals) {
@@ -102,6 +107,15 @@ export class FavoritesService {
       ),
       map(jobs => jobs.filter(job => job.isFavorite))
     )
+  }
+
+  private fetchAllJobs(): Observable<Job[]> {
+    return this.jobsRestService.getAllJobs().pipe(
+      map(jobDtos => jobDtos.map(jobDto => ({
+          ...jobDto,
+          isFavorite: this.isFavorite(jobDto)
+        } as Job))        
+      ));   
   }
 
 }
