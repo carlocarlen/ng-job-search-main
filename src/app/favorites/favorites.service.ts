@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, WritableSignal, computed, signal } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { JobDto } from '../jobs/job.dto';
 import { Job } from '../jobs/job.model';
@@ -41,6 +41,24 @@ export class FavoritesService {
     this.favoritesSubject.next(currentFavorites.filter(favorite => favorite.id !== job.id));
   }
 
+  favoritesList = signal<Job[]>([]);
+  jobsSignals: Signal<Job>[] = []; // This is built when the signalFavorites is built
+
+  // THIS WOULD DEFINITELY BE NOT THE MOST INTUITIVE. MORE FUNCTIONAL PROGRAMMING APPROACH
+  getSignalFavorites(): Signal<Job[]> {
+    // How you compute a signal of Job[] from a [] of signals?
+    return computed(() => {
+      let favorites = [];
+      for (var jobSignal of this.jobsSignals) {
+        if (jobSignal().isFavorite) {
+          favorites.push(jobSignal());
+        }
+      }
+      return favorites;
+    })
+  }
+
+
   /**
    * A jobDto does not have the isFavorite property, this method completes that information
    * @param jobDto a jobDto 
@@ -49,6 +67,14 @@ export class FavoritesService {
   // Thanks to this method, we do not expose how we save favorites (by id, but could be by reference or anything else)
   isFavorite(jobDto: JobDto): boolean {
     return this.favoritesStorage.getFavoritesIds().includes(jobDto.id);
+  }
+
+  
+
+  getSignalForJob(job: Job): WritableSignal<boolean> {
+    let jobSignal = signal(this.favoritesStorage.getFavoritesIds().includes(job.id)); // initial value
+    // How to put together this???
+    return jobSignal;
   }
 
   /**

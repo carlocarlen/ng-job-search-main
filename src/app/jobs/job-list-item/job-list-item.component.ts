@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, WritableSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FavoritesService } from '../../favorites/favorites.service';
 import { Job } from '../job.model';
@@ -11,6 +11,8 @@ import { Job } from '../job.model';
   styleUrl: './job-list-item.component.css'
 })
 export class JobListItemComponent {
+
+  jobAsSignal!: WritableSignal<Job>;
 
   @Input() job!: Job;
   @Input() canHandleFavorite!: boolean
